@@ -32,7 +32,8 @@ const Header = ({ currentUserToken, currentUserName }) => (
 );
 
 const mapStateToProps = state => ({
-    currentUserToken: state.user.currentUserToken
+    currentUserToken: state.user.currentUserToken,
+    currentUserName: state.user.currentUserName,
 });
 
 export default connect(mapStateToProps)(Header);
