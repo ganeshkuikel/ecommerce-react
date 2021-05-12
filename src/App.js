@@ -1,22 +1,48 @@
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
-
+import Header from './components/header/header';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
-import Header from './components/header/header';
+import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import { setCurrentUserToken } from './redux/user/user-actions';
 
 
 
-function App() {
-  return (
-    <div>
-      <Header />
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route exact path='/shop' component={ShopPage} />
-      </Switch>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentUserName: null,
+    }
+  }
+
+  componentDidMount() {
+
+    const { setCurrentUserToken } = this.props;
+    const displayname = localStorage.getItem('user-name')
+    setCurrentUserToken(localStorage.getItem('user-token'));
+    this.setState({ currentUserName: displayname })
+  }
+
+  render() {
+    return (
+      <div>
+        <Header currentUserName={this.state.currentUserName} />
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+          <Route exact path='/shop' component={ShopPage} />
+          <Route exact path='/signin' component={SignInAndSignUpPage} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUserToken: userToken => dispatch(setCurrentUserToken(userToken))
+});
+
+export default connect(null, mapDispatchToProps)(App);

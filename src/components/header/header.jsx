@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assests/crown.svg';
+import './header.styles.scss';
+import { connect } from 'react-redux';
 
-const Header = () => (
+function logout() {
+    localStorage.clear();
+    window.location.pathname = '/signin';
+}
+
+const Header = ({ currentUserToken, currentUserName }) => (
     <div className='header'>
         <Link className='logo-container' to='/'>
             <Logo className='logo' />
@@ -16,8 +21,18 @@ const Header = () => (
             <Link className='option' to='/contact'>
                 CONTACT
             </Link>
+            {
+                currentUserToken ?
+                    <div className='option' onClick={logout}> SIGN OUT {currentUserName}? </div>
+                    :
+                    <Link className='option' to='/signin'>SIGN IN</Link>
+            }
         </div>
     </div>
 );
 
-export default Header;
+const mapStateToProps = state => ({
+    currentUserToken: state.user.currentUserToken
+});
+
+export default connect(mapStateToProps)(Header);
