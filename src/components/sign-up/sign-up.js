@@ -20,7 +20,7 @@ class SignUp extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        axios.post('http://localhost:8000/api/v1/signup/', this.state)
+        axios.post('http://52.66.208.105/api/v1/signup/', this.state)
             .then(response => {
                 console.log(response)
             })

@@ -20,7 +20,7 @@ class SignIn extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        axios.post('http://localhost:8000/api/v1/login/', this.state)
+        axios.post('http://52.66.208.105/api/v1/login/', this.state)
         .then((response) => {
             window.location.pathname = '/';
             localStorage.setItem('user-token',response.data.access)

@@ -9,7 +9,6 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import { setCurrentUserToken, setCurrentUserName } from './redux/user/user-actions';
 
 
-
 class App extends React.Component {
 
   componentDidMount() {
@@ -35,6 +34,7 @@ class App extends React.Component {
                 (<SignInAndSignUpPage />)}
           />
         </Switch>
+
       </div>
     );
   }

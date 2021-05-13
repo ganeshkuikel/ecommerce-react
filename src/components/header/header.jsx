@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assests/crown.svg';
 import './header.styles.scss';
 import { connect } from 'react-redux';
+import CartIcon from '../cart-icon/cart-icon';
+import CartDropDown from '../cart-dropdown/cart-dropdown';
 
 function logout() {
     localStorage.clear();
     window.location.pathname = '/signin';
 }
 
-const Header = ({ currentUserToken, currentUserName }) => (
+const Header = ({ currentUserToken, currentUserName, hidden }) => (
     <div className='header'>
         <Link className='logo-container' to='/'>
             <Logo className='logo' />
@@ -27,13 +29,19 @@ const Header = ({ currentUserToken, currentUserName }) => (
                     :
                     <Link className='option' to='/signin'>SIGN IN</Link>
             }
+            <CartIcon />
         </div>
+        {
+            hidden ? null :
+                <CartDropDown />
+        }
     </div>
 );
 
-const mapStateToProps = state => ({
-    currentUserToken: state.user.currentUserToken,
-    currentUserName: state.user.currentUserName,
+const mapStateToProps = ({ user: { currentUserToken, currentUserName }, cart: { hidden } }) => ({
+    currentUserToken,
+    currentUserName,
+    hidden
 });
 
 export default connect(mapStateToProps)(Header);
